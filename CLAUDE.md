@@ -101,3 +101,4 @@ export const callService = {
 - `LEAD_WEBHOOK_SECRET` — required for `/api/webhooks/leads`.
 - `CRON_SECRET` — required for `/api/cron/*`.
 - `NEXT_PUBLIC_APP_URL` — used to construct Twilio callback URLs and property share links; must be a publicly reachable URL for real Twilio calls (use ngrok locally).
+- `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` — optional; enables rate limiting on `/api/webhooks/leads` (`lib/rateLimit.ts`, 30 req/min per IP+org). Skipped (fail-open) if unset.

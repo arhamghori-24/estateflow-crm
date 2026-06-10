@@ -27,6 +27,7 @@ import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/server";
 import { leadWebhookSchema, normalizeSource } from "@/lib/validation/schemas";
 import { leadAssignmentService, callService } from "@/lib/services";
+import { checkRateLimit, getClientIp } from "@/lib/rateLimit";
 
 export const runtime = "nodejs";
 
@@ -38,6 +39,22 @@ export async function POST(req: Request) {
   const presented = headerSecret ?? querySecret;
   if (!presented) {
     return NextResponse.json({ error: "Missing secret" }, { status: 401 });
+  }
+
+  const rateLimitId = `${getClientIp(req)}:${orgId ?? "default"}`;
+  const { limited, limit, remaining, reset } = await checkRateLimit(rateLimitId);
+  if (limited) {
+    return NextResponse.json(
+      { error: "Too many requests" },
+      {
+        status: 429,
+        headers: {
+          "Retry-After": reset ? Math.max(0, Math.ceil((reset - Date.now()) / 1000)).toString() : "60",
+          ...(limit ? { "X-RateLimit-Limit": limit.toString() } : {}),
+          ...(remaining !== undefined ? { "X-RateLimit-Remaining": remaining.toString() } : {}),
+        },
+      }
+    );
   }
 
   const admin = createAdminClient();
