@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { formatCurrency } from "@/lib/utils";
-import { MapPin, Bed, Bath, Maximize2, Building, IndianRupee } from "lucide-react";
+import { MapPin, Bed, Bath, Maximize2, IndianRupee } from "lucide-react";
 import { PropertyImageUploader } from "@/components/properties/property-image-uploader";
 import { ShareLinkCard } from "@/components/properties/share-link-card";
 

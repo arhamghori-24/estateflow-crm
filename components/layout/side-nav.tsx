@@ -2,11 +2,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  LayoutDashboard, Users, Building2, Bell, Calendar, Clock,
+  LayoutDashboard, Users, Building2, Bell, Clock,
   Image as ImageIcon, Settings, UserCog, BarChart3, Plug, Home,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
 
 const main = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },

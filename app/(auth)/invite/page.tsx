@@ -26,7 +26,7 @@ export default async function InvitePage({ searchParams }: { searchParams: Promi
     <Card>
       <CardHeader>
         <CardTitle>Join {orgName}</CardTitle>
-        <CardDescription>You've been invited as <b>{invite.role.replace("_", " ")}</b></CardDescription>
+        <CardDescription>You&apos;ve been invited as <b>{invite.role.replace("_", " ")}</b></CardDescription>
       </CardHeader>
       <CardContent>
         <InviteAcceptForm token={token} email={invite.email} />

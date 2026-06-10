@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/client";
 import { addPropertyImageRecord } from "@/lib/db/actions";
 import { Upload, Loader2 } from "lucide-react";

@@ -1,10 +1,9 @@
 import { requireUser } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
-import { Image as ImageIcon, Plus, Calendar } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Image as ImageIcon, Calendar } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { SocialPostForm } from "@/components/social/social-post-form";
 import { SocialPostActions } from "@/components/social/social-post-actions";

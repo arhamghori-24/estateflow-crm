@@ -19,7 +19,7 @@ export default async function DashboardPage() {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
           <h1 className="text-xl md:text-2xl font-bold">Hi {profile.full_name.split(" ")[0]} 👋</h1>
-          <p className="text-sm text-muted-foreground">Here's what's happening today</p>
+          <p className="text-sm text-muted-foreground">Here&apos;s what&apos;s happening today</p>
         </div>
         <div className="flex gap-2">
           <Button asChild size="sm" variant="outline"><Link href="/leads/new"><Plus className="mr-1 h-4 w-4" /> New Lead</Link></Button>
