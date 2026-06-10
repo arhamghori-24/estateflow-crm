@@ -9,12 +9,14 @@ pnpm dev              # start dev server (http://localhost:3000)
 pnpm build            # production build
 pnpm lint             # next lint
 pnpm typecheck        # tsc --noEmit
+pnpm test             # vitest run (unit tests for lib/validation, lib/services, lib/utils)
+pnpm test:watch       # vitest watch mode
 pnpm db:push          # apply migrations via Supabase CLI (supabase db push)
 pnpm db:reset         # supabase db reset
 pnpm db:seed          # psql "$DATABASE_URL" -f supabase/seed.sql
 ```
 
-There is no test runner configured (`playwright` is a dependency but no test script/spec files exist yet).
+`playwright` is a dependency but no E2E spec files exist yet. Unit tests live alongside source as `*.test.ts` (vitest, see `vitest.config.ts`).
 
 To apply migrations manually (in order):
 ```bash
@@ -102,3 +104,4 @@ export const callService = {
 - `CRON_SECRET` — required for `/api/cron/*`.
 - `NEXT_PUBLIC_APP_URL` — used to construct Twilio callback URLs and property share links; must be a publicly reachable URL for real Twilio calls (use ngrok locally).
 - `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` — optional; enables rate limiting on `/api/webhooks/leads` (`lib/rateLimit.ts`, 30 req/min per IP+org). Skipped (fail-open) if unset.
+- `SENTRY_DSN` / `NEXT_PUBLIC_SENTRY_DSN` — optional; enables error monitoring (server/edge/client, see `sentry.server.config.ts`, `sentry.edge.config.ts`, `instrumentation-client.ts`). Disabled entirely if unset. `SENTRY_ORG`/`SENTRY_PROJECT`/`SENTRY_AUTH_TOKEN` additionally enable source map upload at build time.
