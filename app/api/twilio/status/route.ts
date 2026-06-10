@@ -5,6 +5,7 @@
 import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/server";
 import { callService } from "@/lib/services";
+import { validateTwilioRequest } from "@/lib/twilio";
 
 export const runtime = "nodejs";
 
@@ -14,10 +15,12 @@ export async function POST(req: Request) {
   const role = url.searchParams.get("role");
   if (!callId) return new NextResponse("missing callId", { status: 400 });
 
-  const form = await req.formData();
-  const CallStatus = String(form.get("CallStatus") ?? "");
-  const CallDuration = String(form.get("CallDuration") ?? "0");
-  const RecordingUrl = form.get("RecordingUrl") ? String(form.get("RecordingUrl")) : null;
+  const { valid, params } = await validateTwilioRequest(req, await req.formData());
+  if (!valid) return new NextResponse("invalid signature", { status: 403 });
+
+  const CallStatus = params.CallStatus ?? "";
+  const CallDuration = params.CallDuration ?? "0";
+  const RecordingUrl = params.RecordingUrl ? String(params.RecordingUrl) : null;
 
   const admin = createAdminClient();
   const updates: Record<string, unknown> = {};

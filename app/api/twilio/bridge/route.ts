@@ -8,6 +8,7 @@
 import { NextResponse } from "next/server";
 import twilio from "twilio";
 import { createAdminClient } from "@/lib/supabase/server";
+import { validateTwilioRequest } from "@/lib/twilio";
 
 export const runtime = "nodejs";
 const { VoiceResponse } = twilio.twiml;
@@ -16,6 +17,9 @@ export async function POST(req: Request) {
   const url = new URL(req.url);
   const callId = url.searchParams.get("callId");
   if (!callId) return new NextResponse("missing callId", { status: 400 });
+
+  const { valid } = await validateTwilioRequest(req, await req.formData());
+  if (!valid) return new NextResponse("invalid signature", { status: 403 });
 
   const admin = createAdminClient();
   const { data: call } = await admin
